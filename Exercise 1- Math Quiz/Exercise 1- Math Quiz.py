@@ -1,16 +1,23 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+import os   
 
 class MathsQuizGame:
     def __init__(self, root):
+        
+        # Window Icon
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_dir, "Math Quiz.ico")
+        root.iconbitmap(icon_path)
+
         # Initialize main game window with fullscreen and dark theme
         self.root = root
         self.root.title("Math Quest Adventure")  # Set window title
         self.root.attributes('-fullscreen', True)  # Start in fullscreen mode
         self.root.configure(bg='#0a0a1a')  # Set dark blue background color
         self.root.bind('<Escape>', self.toggle_fullscreen)  # Bind ESC key to toggle fullscreen
-        
+
         # Initialize game state variables
         self.difficulty = None  # Store current difficulty level
         self.score = 0  # Player's current score
