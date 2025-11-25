@@ -12,6 +12,10 @@ class JokeApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Alexa Tell Me A Joke!")
+        
+        # Window Icon
+        icon_path = os.path.join(BASE_DIR, "Alexa tell me a Joke.ico")
+        self.root.iconbitmap(icon_path)
 
         # Window size
         self.root.geometry("900x600")
