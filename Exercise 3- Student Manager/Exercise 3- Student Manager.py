@@ -60,6 +60,7 @@ class StudentApp(tk.Tk):
         self.selected_student_id = None  # Currently selected student ID
         self.selected_label = None       # Reference to selected student label
         self.highest_name_label = None   # Label for highest/lowest student display
+        self.instructions_btn = None     # Reference to instructions button
         
         # Load background images for different screens
         self.bg1 = load_img("1.png", (900, 600))  # Main menu
@@ -68,6 +69,7 @@ class StudentApp(tk.Tk):
         self.bg4 = load_img("4.png", (900, 600))  # Update student
         self.bg5 = load_img("5.png", (900, 600))  # Highest scoring student
         self.bg6 = load_img("6.png", (900, 600))  # Lowest scoring student
+        self.bg_instructions = load_img("Instructions.png", (900, 600))  # Instructions page
         
         # Create background label
         self.bg_label = tk.Label(self, image=self.bg1)
@@ -85,6 +87,16 @@ class StudentApp(tk.Tk):
         
         # Create the main navigation buttons
         self.create_buttons()
+        # Create instructions button (only for main menu)
+        self.create_instructions_button()
+
+    def create_instructions_button(self):
+        """Create the instructions button (only for main menu)"""
+        self.instructions_btn = tk.Button(self, text="Instructions", command=self.show_instructions, 
+                                        font=("Arial", 13), bg="#213159", fg="white",
+                                        relief="flat", borderwidth=0, highlightthickness=0,
+                                        activebackground="#213159", activeforeground="white")
+        self.instructions_btn.place(x=715, y=40, width=130, height=40)
 
     def _vc_id(self, proposed):
         """Validation function for Student ID field"""
@@ -166,11 +178,15 @@ class StudentApp(tk.Tk):
         tk.Button(self, text="Update Student", command=self.open_update_page, **btn_style).place(x=50, y=293, width=170, height=45)
         tk.Button(self, text="Highest Scoring Student", command=self.show_highest_student, **btn_style).place(x=36, y=360, width=190, height=45)
         tk.Button(self, text="Lowest Scoring Student", command=self.show_lowest_student, **btn_style).place(x=36, y=428, width=190, height=45)
-        
-        # Quit button with different styling
+
+        # Quit button
         tk.Button(self, text="Quit", command=self.quit, font=("Arial", 13), bg="#cc0000", fg="white",
                 relief="flat", borderwidth=0, highlightthickness=0,
                 activebackground="#cc0000", activeforeground="white").place(x=77, y=519, width=110, height=42)
+
+    def show_instructions(self):
+        """Display the instructions screen"""
+        self.switch(self.bg_instructions)
 
     def open_sort_dropdown(self):
         """Open the sorting options dropdown menu"""
@@ -343,6 +359,12 @@ class StudentApp(tk.Tk):
         self.bg_label.config(image=bg_image)
         self.bg_label.image = bg_image
         self.header_text.place_forget()  # Hide header
+
+        # Show instructions button only on main menu (1.png)
+        if bg_image == self.bg1:
+            self.instructions_btn.place(x=715, y=40, width=130, height=40)
+        else:
+            self.instructions_btn.place_forget()
 
         # Clear various UI elements
         if self.highest_name_label: 
